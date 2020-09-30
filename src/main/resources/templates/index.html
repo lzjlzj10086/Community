@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="nav::head(~{::title})">
+    <title>首页</title>
+</head>
+<body>
+<nav th:replace="nav::menu(1)">
+
+</nav>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-xs-12 col-sm12 col-md-12 col-lg-9 msole">
+            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>发现</h2>
+            <hr>
+            <div class="media " th:each="question:${pageInfo.list}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object xs-image img-rounded" th:src="@{${question.user.imageUrl}}" alt="用户">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <a th:href="@{/question(questionCode = ${question.questionCode})}"><h4 class="media-heading" th:text="${question.title}">话题标题</h4></a>
+                    <br>
+                    <span class="text-kind"><span th:text="${question.commentCount}"></span> 个回复  | <span th:text="${question.viewCount}"></span> 次浏览  | <span th:text="${#dates.format(question.createTime,'yyyy-MM-dd')}"></span> 天前</span>
+                </div>
+            </div>
+            <div>
+                <nav aria-label="..." class="mfoot">
+                    <ul class="pagination pagination-lg">
+                        <li class="" th:unless="${pageInfo.isFirstPage}"><a th:href="@{/index(pageNum = 1)}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                        <li class="" th:unless="${pageInfo.isFirstPage}"><a th:href="@{/index(pageNum = ${pageInfo.pageNum} - 1)}" >上一页 <span class="sr-only"></span></a></li>
+                        <li class="" th:unless="${pageInfo.isLastPage}"><a th:href="@{/index(pageNum = ${pageInfo.pageNum} + 1)}" > 下一页<span class="sr-only">(current)</span></a></li>
+                        <li class="" th:unless="${pageInfo.isLastPage}"><a th:href="@{/index(pageNum = ${pageInfo.pages})}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm12 col-md-12 col-lg-3">
+            <div>
+                <h3>热门话题</h3>
+            </div>
+            <div class="list-group my-menu" >
+                <a href="#" class="list-group-item active">我的话题<span class="badge">14</span></a>
+                <a href="#" class="list-group-item">最新回复<span class="badge">14</span></a>
+                <a href="#" class="list-group-item">Morbi leo risus<span class="badge">14</span></a>
+                <a href="#" class="list-group-item">Porta ac consectetur ac<span class="badge">14</span></a>
+                <a href="#" class="list-group-item">Vestibulum at eros<span class="badge">14</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

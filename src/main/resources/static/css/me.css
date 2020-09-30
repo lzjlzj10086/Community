@@ -1,0 +1,39 @@
+body {
+    background:url("../images/bg.png");
+}
+.main{
+    margin-top: 40px;
+    margin-left: 100px;
+    margin-right: 100px;
+    background-color: white;
+}
+.btn-publish{
+    float: right;
+    margin-bottom: 15px;
+}
+.xs-image{
+    width: 36px;
+    height: 36px;
+}
+.text-kind{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+.update{
+    color: #999;
+    font-size: 18px;
+}
+
+.my-menu{
+    margin-top: 80px;
+}
+.mfoot{
+    float: right;
+}
+.msole{
+    border-right: 1px #999;
+}
+.delete{
+    margin-left: 50px;
+}

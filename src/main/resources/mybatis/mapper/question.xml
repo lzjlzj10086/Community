@@ -1,0 +1,74 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.mapper.QuestionMapper">
+    <insert id="saveQuestion" parameterType="Question">
+        insert into t_question (
+            questioncode,
+            title,
+            context,
+            tags,
+            createtime,
+            updatetime,
+            usercode,
+            viewcount,
+            likecount,
+            commentcount
+        ) values (
+            #{questionCode},
+            #{title},
+            #{context},
+            #{tags},
+            #{createTime},
+            #{updateTime},
+            #{userCode},
+            #{viewCount},
+            #{likeCount},
+            #{commentCount}
+        );
+    </insert>
+    <select id="findQuestions" resultMap="one" parameterType="String">
+        select *from t_question q,t_user u
+        where q.usercode = u.usercode
+        <if test="title != null and title !=''">
+            and title like concat('%', #{title}, '%')
+        </if>
+        order by questioncode desc
+    </select>
+    <resultMap id="one" type="Question">
+        <id column="questioncode" property="questionCode"></id>
+        <result column="title" property="title"></result>
+        <result column="context" property="context"></result>
+        <result column="tags" property="tags"></result>
+        <result column="createtime" property="createTime"></result>
+        <result column="updatetime" property="updateTime"></result>
+        <result column="usercode" property="userCode"></result>
+        <result column="viewcount" property="viewCount"></result>
+        <result column="likecount" property="likeCount"></result>
+        <result column="commentcount" property="commentCount"></result>
+        <association property="user" javaType="User">
+            <id column="usercode" property="userCode"></id>
+            <result column="password" property="passWord"></result>
+            <result column="username" property="userName"></result>
+            <result column="imageurl" property="imageUrl"></result>
+        </association>
+    </resultMap>
+    <select id="findQuestionById" resultMap="one">
+        select *from t_question q,t_user u
+        where q.usercode = u.usercode
+        and q.questioncode = #{questionCode}
+    </select>
+    <select id="countViewById" parameterType="String">
+        update t_question
+        set viewcount = viewcount + 1
+        where questioncode = #{questionCode}
+    </select>
+    <update id="updateQuestion" parameterType="Question">
+        update t_question
+        set title = #{title},
+            context = #{context},
+            tags = #{tags},
+            updatetime = #{updateTime}
+        where questioncode = #{questionCode}
+    </update>
+</mapper>

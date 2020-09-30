@@ -1,0 +1,24 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/community?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: admin
+  thymeleaf:
+    cache: false
+  tengxun:
+    accessKey: AKIDCBNO9QgLxKRN7bs9JFuLahdJjwKT98h0
+    secretKey: GLI1UijYZKrDIH1g6h39miQvGOIwLXUB
+    bucket: ap-guangzhou
+    bucketName: books-1258619147
+    path: https://books-1258619147.cos.ap-guangzhou.myqcloud.com
+    qianzui: books
+  http:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+mybatis:
+  type-aliases-package: com.community.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml

@@ -1,0 +1,24 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.mapper.UserMapper">
+    <select id="countUser" resultType="Int">
+        select count(username) from t_user where username = #{userName}
+    </select>
+    <insert id="register" parameterType="User">
+        insert into t_user (
+            usercode,
+            password,
+            username,
+            imageurl
+        )values (
+            #{userCode},
+            #{passWord},
+            #{userName},
+            #{imageUrl}
+        )
+    </insert>
+    <select id="loginUser" parameterType="User" resultType="User">
+        select *from t_user where username = #{userName} and password = #{passWord}
+    </select>
+</mapper>
