@@ -71,4 +71,78 @@
             updatetime = #{updateTime}
         where questioncode = #{questionCode}
     </update>
+    <insert id="saveComment" parameterType="Comment">
+        insert into t_comment(
+            commentcode,
+            parentcode,
+            parenttype,
+            usercode,
+            createtime,
+            updatetime,
+            likecount,
+            context,
+            commentcount
+        ) values (
+            #{commentCode},
+            #{parentCode},
+            #{parentType},
+            #{userCode},
+            #{createTime},
+            #{updateTime},
+            #{likeCount},
+            #{context},
+            #{commentCount}
+        )
+    </insert>
+    <resultMap id="comment" type="Comment">
+        <id column="commentcode" property="commentCode"></id>
+        <result column="parentcode" property="parentCode"></result>
+        <result column="parenttype" property="parentType"></result>
+        <result column="usercode" property="userCode"></result>
+        <result column="createtime" property="createTime"></result>
+        <result column="updatetime" property="updateTime"></result>
+        <result column="likecount" property="likeCount"></result>
+        <result column="context" property="context"></result>
+        <result column="commentcount" property="commentCount"></result>
+        <association property="user" javaType="User">
+            <id column="usercode" property="userCode"></id>
+            <result column="password" property="passWord"></result>
+            <result column="username" property="userName"></result>
+            <result column="imageurl" property="imageUrl"></result>
+        </association>
+    </resultMap>
+    <select id="findsComments" resultMap="comment">
+        select *from t_comment c,t_user u
+        where c.parentcode = #{questionCode}
+        and parenttype = 1 and c.usercode = u.usercode
+        order by createtime desc
+    </select>
+    <select id="subComments" resultMap="comment">
+        select *from t_comment c,t_user u
+        where c.parentcode = #{parentCode}
+        and parenttype = 2 and c.usercode = u.usercode
+        order by createtime desc
+    </select>
+    <update id="countCommentById" parameterType="String">
+        update t_question
+        set commentcount = commentcount+1
+        where questioncode = #{questionCode}
+    </update>
+    <update id="countSubComments" parameterType="String">
+        update t_comment
+        set commentcount = commentcount +1
+        where commentcode = #{parentCode}
+        and parenttype = 1
+    </update>
+    <!--相关问题查询-->
+    <select id="aboutQuestions" parameterType="Question" resultMap="one">
+        select
+           *
+        from t_question
+        where questioncode != #{questionCode}
+        <if test="tags !=null and tags !='' ">
+            and tags regexp #{tags}
+        </if>
+        order by createtime desc limit 20
+    </select>
 </mapper>

@@ -20,4 +20,9 @@ public class CodeUtil {
         String code = "qt"+Long.toString(longTime);
         return code;
     }
+    public static String CommentCodeRandom(){
+        long longTime = System.currentTimeMillis();
+        String code = "cm"+Long.toString(longTime);
+        return code;
+    }
 }
