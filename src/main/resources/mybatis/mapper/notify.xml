@@ -46,4 +46,14 @@
         and n.questioncode = q.questioncode
         order by n.createtime desc
     </select>
+    <select id="countNotify" resultType="Integer">
+        select count(status) from t_notify
+        where receivercode = #{userCode}
+        and status = 1
+    </select>
+    <update id="updateStatus" parameterType="String">
+        update t_notify
+        set status = 2
+        where receivercode = #{userCode}
+    </update>
 </mapper>

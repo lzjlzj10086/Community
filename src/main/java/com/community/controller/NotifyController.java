@@ -21,12 +21,17 @@ public class NotifyController {
     private NotifyService notifyService;
 
 
+    @RequestMapping("toFindNotify")
+    public String toFindNotify(){
+        return "redirect:/findNotifys";
+    }
     @RequestMapping("findNotifys")
     public String findNotifys(@RequestParam(defaultValue = "1") Integer pageNum, Model model, Map<String,Object> map, HttpSession session){
         User user =(User)session.getAttribute("user");
         PageInfo<Notify> notifys = notifyService.findNotifys(user.getUserCode(), pageNum, 15);
         model.addAttribute("notifys",notifys);
         map.put("notifyInfo",notifys);
+        session.setAttribute("countNotifys",0);
         return "notify";
     }
 }

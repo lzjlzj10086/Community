@@ -2,6 +2,7 @@ package com.community.controller;
 
 import com.community.pojo.User;
 import com.community.service.LoignService;
+import com.community.service.NotifyService;
 import com.community.util.CodeUtil;
 import com.community.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class LoginController {
     @Autowired
     private LoignService loignService;
     @Autowired
+    private NotifyService notifyService;
+    @Autowired
     private upload upload;
     @RequestMapping("tologin")
     public String toLogin(){
@@ -39,6 +42,8 @@ public class LoginController {
         if (loginUser != null){
             loginUser.setPassWord(null);
             session.setAttribute("user",loginUser);
+            Integer countNotifys = notifyService.countNotifys(loginUser.getUserCode());
+            session.setAttribute("countNotifys",countNotifys);
             //request.getServletContext().setAttribute("user",loginUser);
             return "redirect:/index";
         }else {

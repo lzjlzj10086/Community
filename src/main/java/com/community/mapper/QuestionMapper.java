@@ -23,7 +23,7 @@ public interface QuestionMapper {
 
     /**
      * 相关问题集合查询
-     * @param question
+     * @param questionCode
      * @return
      */
     List<Question> aboutQuestions(String questionCode,String regexpTag);

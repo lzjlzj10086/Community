@@ -1,25 +1,26 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="nav::head(~{::title})">
+<head th:replace="com::head(~{::title})">
     <title>我的话题</title>
 </head>
 <body>
-<nav th:replace="nav::menu(3)">
+<nav th:replace="com::menu(3)">
 </nav>
 <div class="container-fluid main">
     <div class="row">
         <div class="col-xs-12 col-sm12 col-md-12 col-lg-9 msole">
-            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>通知消息</h2>
+            <h2><span class="glyphicon glyphicon-bell" aria-hidden="true"></span>通知消息</h2>
             <hr>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="media" th:each="notify : ${notifyInfo.list}">
                     <div class="media-body">
                         <p class="media-heading">
-                            <span th:text="${notify.user.userName+'评论'}"></span>
+                            <a href="#"><span th:text="${notify.user.userName}"></span></a>&nbsp;&nbsp;
+                            <span th:if="${notify.type == 1}">评论</span>
+                            <span th:if="${notify.type == 2}">回复</span>&nbsp;&nbsp;
                             <a th:href="@{/question(questionCode = ${notify.questionCode})}" th:text="${notify.questionTitle}">
-                            </a>
-                            <span class="label label-danger" th:if="${notify.status == 1}">未读</span>
-                            <span class="label label-danger" th:if="${notify.status == 2}">已读</span>
+                            </a>&nbsp;&nbsp;
+                            <span class="text-kind"><span th:text="${#dates.format(notify.createTime,'yyyy-MM-dd')}"></span> 天前</span>
                         </p>
                     </div>
                 </div>

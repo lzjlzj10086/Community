@@ -21,6 +21,11 @@ public class NotifyService {
         PageHelper.startPage(pageNum,pageSize);
         List<Notify> notifyList = notifyMapper.findNotifys(userCode);
         PageInfo<Notify> pageInfo = new PageInfo<Notify>(notifyList);
+        notifyMapper.updateStatus(userCode);
         return pageInfo;
+    }
+    public Integer countNotifys(String userCode){
+        Integer countNotify = notifyMapper.countNotify(userCode);
+        return countNotify;
     }
 }
