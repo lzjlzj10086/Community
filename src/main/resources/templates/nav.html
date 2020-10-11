@@ -40,6 +40,7 @@
                 <ul class="nav navbar-nav">
                     <li th:classappend="${n==1} ? 'active'"><a href="/index">首页<span class="sr-only">(current)</span></a></li>
                     <li th:classappend="${n==2} ? 'active'"><a href="/topublish">发布话题</a></li>
+                    <li th:classappend="${n==3} ? 'active'"><a href="/findNotifys">通知<span class="badge message">42</span></a></li>
                 </ul>
                 <li th:if="${session.user == null}"><a href="/tologin">登录</a></li>
                 <li class="dropdown" th:if="${session.user != null}">

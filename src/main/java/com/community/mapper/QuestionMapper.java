@@ -26,5 +26,5 @@ public interface QuestionMapper {
      * @param question
      * @return
      */
-    List<Question> aboutQuestions(Question question);
+    List<Question> aboutQuestions(String questionCode,String regexpTag);
 }

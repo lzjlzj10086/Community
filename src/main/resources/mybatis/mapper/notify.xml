@@ -1,0 +1,49 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.mapper.NotifyMapper">
+   <insert id="saveNotify" parameterType="Notify">
+       insert into t_notify(
+            code,
+            notifycode,
+            receivercode,
+            outercode,
+            type,
+            status,
+            createtime,
+            questioncode
+       )values (
+            #{code},
+            #{notifyCode},
+            #{receiverCode},
+            #{outerCode},
+            #{type},
+            #{status},
+            #{createTime},
+            #{questionCode}
+       )
+   </insert>
+    <resultMap id="notify" type="Notify">
+        <id column="code" property="code"></id>
+        <result column="notifycode" property="notifyCode"></result>
+        <result column="receivercode" property="receiverCode"></result>
+        <result column="outercode" property="outerCode"></result>
+        <result column="createtime" property="createTime"></result>
+        <result column="type" property="type"></result>
+        <result column="status" property="status"></result>
+        <result column="questioncode" property="questionCode"></result>
+        <result column="title" property="questionTitle"></result>
+        <association property="user" javaType="User">
+            <id column="usercode" property="userCode"></id>
+            <result column="username" property="userName"></result>
+            <result column="imageurl" property="imageUrl"></result>
+        </association>
+    </resultMap>
+    <select id="findNotifys" resultMap="notify" parameterType="String">
+        select *from t_notify n,t_user u,t_question q
+        where receivercode = #{userCode}
+        and n.notifycode = u.usercode
+        and n.questioncode = q.questioncode
+        order by n.createtime desc
+    </select>
+</mapper>

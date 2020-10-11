@@ -10,7 +10,25 @@ public class Comment {
     private Integer likeCount;
     private String context;
     private Integer commentCount;
+    private String receiverCode;
+    private String questionCode;
     private User user;
+
+    public String getQuestionCode() {
+        return questionCode;
+    }
+
+    public void setQuestionCode(String questionCode) {
+        this.questionCode = questionCode;
+    }
+
+    public String getReceiverCode() {
+        return receiverCode;
+    }
+
+    public void setReceiverCode(String receiverCode) {
+        this.receiverCode = receiverCode;
+    }
 
     public Integer getCommentCount() {
         return commentCount;

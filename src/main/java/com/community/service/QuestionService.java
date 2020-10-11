@@ -2,6 +2,7 @@ package com.community.service;
 
 import com.community.mapper.QuestionMapper;
 import com.community.pojo.Comment;
+import com.community.pojo.Notify;
 import com.community.pojo.Question;
 import com.community.util.CodeUtil;
 import com.github.pagehelper.PageHelper;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
+    @Autowired
+    private NotifyService notifyService;
 
     /**
      * 发布话题
@@ -73,8 +76,7 @@ public class QuestionService {
                 .map(t -> t.replace("+", "").replace("*", "").replace("?", ""))
                 .filter(StringUtils::isNotBlank)
                 .collect(Collectors.joining("|"));
-        question.setTags(regexpTag);
-        List<Question> aboutQuestions = questionMapper.aboutQuestions(question);
+        List<Question> aboutQuestions = questionMapper.aboutQuestions(question.getQuestionCode(),regexpTag);
         return aboutQuestions;
     }
     @Transactional
@@ -82,12 +84,24 @@ public class QuestionService {
         question.setUpdateTime(System.currentTimeMillis());
         return questionMapper.updateQuestion(question);
     }
-    public Integer saveComment(Comment comment){
+    @Transactional
+    public Integer saveComment(Comment comment,String questionUserCode){
         int saveComment = questionMapper.saveComment(comment);
         questionMapper.countCommentById(comment.getParentCode());
         if (comment.getParentType() == 2){
             questionMapper.countSubComments(comment.getParentCode());
         }
+        //创建通知
+        Notify notify = new Notify();
+        notify.setCode(CodeUtil.NotifyCodeRandom());
+        notify.setNotifyCode(comment.getUserCode());
+        notify.setReceiverCode(questionUserCode);
+        notify.setType(comment.getParentType());
+        notify.setOuterCode(comment.getParentCode());
+        notify.setStatus(1);
+        notify.setCreateTime(System.currentTimeMillis());
+        notify.setQuestionCode(comment.getQuestionCode());
+        notifyService.saveNotify(notify);
         return saveComment;
     }
 

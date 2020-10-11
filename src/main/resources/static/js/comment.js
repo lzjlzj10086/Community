@@ -1,15 +1,17 @@
 function post() {
     var questionId = $("#question_id").val();
     var content = $("#comment_content").val();
-    comment2target(questionId, 1, content);
+    var questionUserCode = $("#question_userCode").val();
+    var questionCode = $("#questionCode").val();
+    comment2target(questionId, 1, content,questionUserCode,questionCode);
 }
 
-function comment2target(targetId, type, content) {
+function comment2target(targetId, type, content,questionUserCode,questionCode) {
     if (!content) {
         alert("不能回复空内容~~~");
         return;
     }
-
+    console.log(questionUserCode);
     $.ajax({
         type: "POST",
         url: "/comment",
@@ -17,7 +19,9 @@ function comment2target(targetId, type, content) {
         data: JSON.stringify({
             "parentCode": targetId,
             "context": content,
-            "parentType": type
+            "parentType": type,
+            "receiverCode": questionUserCode,
+            "questionCode": questionCode
         }),
         success: function (response) {
             if (response.code == 200) {
@@ -40,7 +44,9 @@ function comment2target(targetId, type, content) {
 function comment(e) {
     var commentId = e.getAttribute("data-id");
     var content = $("#input-" + commentId).val();
-    comment2target(commentId, 2, content);
+    var questionUserCode = $("#question_userCode").val();
+    var questionCode = $("#questionCode").val();
+    comment2target(commentId, 2, content,questionUserCode,questionCode);
 }
 
 /**

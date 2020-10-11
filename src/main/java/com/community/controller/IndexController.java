@@ -19,7 +19,7 @@ public class IndexController {
 
     @RequestMapping("/index")
     public String index(@RequestParam(defaultValue = "1") Integer pageNum, Model model, Map<String,Object> map,String title){
-        PageInfo<Question> questions = questionService.findQuestion(pageNum, 9,title);
+        PageInfo<Question> questions = questionService.findQuestion(pageNum, 12,title);
         model.addAttribute("questions",questions);
         map.put("pageInfo",questions);
         return "index";

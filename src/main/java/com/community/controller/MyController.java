@@ -23,7 +23,7 @@ public class MyController {
     public String toProfile(@RequestParam(defaultValue = "1") Integer pageNum, Model model, Map<String,Object> map, String title, HttpSession session){
         User user = (User)session.getAttribute("user");
         String userCode = user.getUserCode();
-        PageInfo<Question> myQuestions = myService.findMyQuestion(pageNum,9,title,userCode);
+        PageInfo<Question> myQuestions = myService.findMyQuestion(pageNum,12,title,userCode);
         model.addAttribute("myQuestions",myQuestions);
         map.put("mypageInfo",myQuestions);
         return "profile";

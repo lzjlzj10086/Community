@@ -25,4 +25,9 @@ public class CodeUtil {
         String code = "cm"+Long.toString(longTime);
         return code;
     }
+    public static String NotifyCodeRandom(){
+        long longTime = System.currentTimeMillis();
+        String code = "nt"+Long.toString(longTime);
+        return code;
+    }
 }

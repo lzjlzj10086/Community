@@ -67,7 +67,8 @@ public class QuestionController {
         comment.setUpdateTime(System.currentTimeMillis());
         comment.setLikeCount(0);
         comment.setCommentCount(0);
-        Integer saveComment = questionService.saveComment(comment);
+        System.out.println(comment.getReceiverCode());
+        Integer saveComment = questionService.saveComment(comment,comment.getReceiverCode());
         if (saveComment != 0){
             msg m = new msg(200,"评论成功");
             return m;

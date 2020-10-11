@@ -135,13 +135,13 @@
         and parenttype = 1
     </update>
     <!--相关问题查询-->
-    <select id="aboutQuestions" parameterType="Question" resultMap="one">
+    <select id="aboutQuestions" parameterType="String" resultMap="one">
         select
            *
         from t_question
         where questioncode != #{questionCode}
-        <if test="tags !=null and tags !='' ">
-            and tags regexp #{tags}
+        <if test="regexpTag !=null and regexpTag !='' ">
+            and tags regexp #{regexpTag}
         </if>
         order by createtime desc limit 20
     </select>

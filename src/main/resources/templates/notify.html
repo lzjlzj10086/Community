@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="nav::head(~{::title})">
+    <title>我的话题</title>
+</head>
+<body>
+<nav th:replace="nav::menu(3)">
+</nav>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-xs-12 col-sm12 col-md-12 col-lg-9 msole">
+            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>通知消息</h2>
+            <hr>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="media" th:each="notify : ${notifyInfo.list}">
+                    <div class="media-body">
+                        <p class="media-heading">
+                            <span th:text="${notify.user.userName+'评论'}"></span>
+                            <a th:href="@{/question(questionCode = ${notify.questionCode})}" th:text="${notify.questionTitle}">
+                            </a>
+                            <span class="label label-danger" th:if="${notify.status == 1}">未读</span>
+                            <span class="label label-danger" th:if="${notify.status == 2}">已读</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <nav aria-label="..." class="mfoot">
+                    <ul class="pagination pagination-lg">
+                        <li class="" th:unless="${notifyInfo.isFirstPage}"><a th:href="@{/findNotifys(pageNum = 1)}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                        <li class="" th:unless="${notifyInfo.isFirstPage}"><a th:href="@{/findNotifys(pageNum = ${notifyInfo.pageNum} - 1)}" >上一页 <span class="sr-only"></span></a></li>
+                        <li class="" th:unless="${notifyInfo.isLastPage}"><a th:href="@{/findNotifys(pageNum = ${notifyInfo.pageNum} + 1)}" > 下一页<span class="sr-only">(current)</span></a></li>
+                        <li class="" th:unless="${notifyInfo.isLastPage}"><a th:href="@{/findNotifys(pageNum = ${notifyInfo.pages})}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm12 col-md-12 col-lg-3">
+            <div class="list-group my-menu" >
+                <a href="#" class="list-group-item active">我的话题<span class="badge">14</span></a>
+                <a href="#" class="list-group-item">最新回复<span class="badge">14</span></a>
+                <a href="#" class="list-group-item">Morbi leo risus<span class="badge">14</span></a>
+                <a href="#" class="list-group-item">Porta ac consectetur ac<span class="badge">14</span></a>
+                <a href="#" class="list-group-item">Vestibulum at eros<span class="badge">14</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
