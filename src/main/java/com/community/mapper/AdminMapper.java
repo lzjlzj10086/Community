@@ -9,4 +9,6 @@ import java.util.List;
 @Mapper
 public interface AdminMapper {
     List<Question> findQuestionsByAdmin();
+    List<Question> findQuestionsByAdminOfNotPass();
+    Integer updateQuestionStatusById(Question question);
 }

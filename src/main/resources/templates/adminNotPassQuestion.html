@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="com::head(~{::title})">
-    <title>管理员</title>
+    <title>话题不通过</title>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -31,13 +31,12 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-</nav>
 <div class="container-fluid main">
     <div class="row">
         <div class="col-xs-12 col-sm12 col-md-12 col-lg-9 msole">
-            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>话题审核</h2>
+            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>审核未过</h2>
             <hr>
-            <div class="media " th:each="questionAdmin:${pageAdminInfo.list}">
+            <div class="media " th:each="questionAdmin:${NotPassPageInfo.list}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object xs-image img-rounded" th:src="@{${questionAdmin.user.imageUrl}}" alt="用户">
@@ -47,21 +46,21 @@
                     <a th:href="@{/adminQuestion(questionCode = ${questionAdmin.questionCode})}"><h4 class="media-heading" th:text="${questionAdmin.title}">话题标题</h4></a>
                     <span>
                        <a th:href="@{/updateStatus(questionCode = ${questionAdmin.questionCode},status = 1)}"><button type="button" class="btn btn-success pull-right">通过</button></a>
-                       <a th:href="@{/updateStatus(questionCode = ${questionAdmin.questionCode},status = 3)}"><button type="button" class="b_admin btn btn-danger pull-right">不通过</button></a>
                     </span>
                     <br>
                     <span class="text-kind"><span th:text="${questionAdmin.commentCount}"></span> 个回复  | <span th:text="${questionAdmin.viewCount}"></span> 次浏览  | <span th:text="${#dates.format(questionAdmin.createTime,'yyyy-MM-dd')}"></span> 天前</span>
                     <span class="label label-danger" th:if="${questionAdmin.status == 2}">话题审核中</span>
                     <span class="label label-danger" th:if="${questionAdmin.status == 3}">审核不通过</span>
+                    <span class="label label-success" th:if="${questionAdmin.status == 1}">审核通过</span>
                 </div>
             </div>
             <div>
                 <nav aria-label="..." class="mfoot">
                     <ul class="pagination pagination-lg">
-                        <li class="" th:unless="${pageAdminInfo.isFirstPage}"><a th:href="@{/adminIndex(pageNum = 1)}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-                        <li class="" th:unless="${pageAdminInfo.isFirstPage}"><a th:href="@{/adminIndex(pageNum = ${pageAdminInfo.pageNum} - 1)}" >上一页 <span class="sr-only"></span></a></li>
-                        <li class="" th:unless="${pageAdminInfo.isLastPage}"><a th:href="@{/adminIndex(pageNum = ${pageAdminInfo.pageNum} + 1)}" > 下一页<span class="sr-only">(current)</span></a></li>
-                        <li class="" th:unless="${pageAdminInfo.isLastPage}"><a th:href="@{/adminIndex(pageNum = ${pageAdminInfo.pages})}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+                        <li class="" th:unless="${NotPassPageInfo.isFirstPage}"><a th:href="@{/adminNotPassQuestion(pageNum = 1)}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                        <li class="" th:unless="${NotPassPageInfo.isFirstPage}"><a th:href="@{/adminNotPassQuestion(pageNum = ${NotPassPageInfo.pageNum} - 1)}" >上一页 <span class="sr-only"></span></a></li>
+                        <li class="" th:unless="${NotPassPageInfo.isLastPage}"><a th:href="@{/adminNotPassQuestion(pageNum = ${NotPassPageInfo.pageNum} + 1)}" > 下一页<span class="sr-only">(current)</span></a></li>
+                        <li class="" th:unless="${NotPassPageInfo.isLastPage}"><a th:href="@{/adminNotPassQuestion(pageNum = ${NotPassPageInfo.pages})}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
                     </ul>
                 </nav>
             </div>

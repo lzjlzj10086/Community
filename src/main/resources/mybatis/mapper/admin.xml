@@ -23,10 +23,22 @@
     </resultMap>
     <select id="findQuestionsByAdmin" resultMap="adminone">
         select *from t_question q,t_user u
-        where q.usercode = u.usercode and status != 1
+        where q.usercode = u.usercode and status = 2
         <if test="title != null and title !=''">
             and title like concat('%', #{title}, '%')
         </if>
         order by questioncode desc
     </select>
+    <select id="findQuestionsByAdminOfNotPass" resultMap="adminone">
+        select *from t_question q,t_user u
+        where q.usercode = u.usercode and status = 3
+        <if test="title != null and title !=''">
+            and title like concat('%', #{title}, '%')
+        </if>
+        order by questioncode desc
+    </select>
+    <!--更新话题状态-->
+    <update id="updateQuestionStatusById" parameterType="Question">
+        update t_question set status = #{status}  where questionCode = #{questionCode};
+    </update>
 </mapper>
