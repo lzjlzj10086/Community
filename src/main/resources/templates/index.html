@@ -4,7 +4,45 @@
     <title>首页</title>
 </head>
 <body>
-<nav th:replace="com::menu(1)">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">408社区</span>
+            </button>
+            <a class="navbar-brand" href="#">408社区</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <form class="navbar-form navbar-left" action="/index">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="title" placeholder="搜索话题">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/index">首页<span class="sr-only">(current)</span></a></li>
+                    <li><a href="/topublish">发布话题</a></li>
+                    <li th:if="${session.user != null}"><a href="/toFindNotify">通知<span class="badge message" th:text="${session.countNotifys}"></span></a></li>
+                </ul>
+                <li th:if="${session.user == null}"><a href="/tologin">登录</a></li>
+                <li class="dropdown" th:if="${session.user != null}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span th:text="${session.user.userName}">我</span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/profile">我的话题</a></li>
+                        <li><a href="#">个人资料</a></li>
+                        <li><a href="/logintOut">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 
 </nav>
 <div class="container-fluid main">
@@ -35,18 +73,20 @@
                 </nav>
             </div>
         </div>
-        <div class="col-xs-12 col-sm12 col-md-12 col-lg-3">
-            <div>
-                <h3>热门话题</h3>
+        <div class="col-xs-12 col-sm12 col-md-12 col-lg-3" style="margin-top: 20px;">
+            <!--热门话题-->
+            <div class="col-xs-12 col-sm12 col-md-12 col-lg-12">
+                <h4><span>热门问题</span></h4>
+                <ul style="padding-left: 15px">
+                    <li class="question-related" th:each="hotQuestion : ${hotQuestions}">
+                        <a th:href="@{/question(questionCode = ${hotQuestion.questionCode})}"><span th:text="${hotQuestion.title}"></span></a>
+                    </li>
+                </ul>
             </div>
-            <div class="list-group my-menu" >
-                <a href="#" class="list-group-item active">我的话题<span class="badge">14</span></a>
-                <a href="#" class="list-group-item">最新回复<span class="badge">14</span></a>
-                <a href="#" class="list-group-item">Morbi leo risus<span class="badge">14</span></a>
-                <a href="#" class="list-group-item">Porta ac consectetur ac<span class="badge">14</span></a>
-                <a href="#" class="list-group-item">Vestibulum at eros<span class="badge">14</span></a>
-            </div>
+            <hr class="col-xs-12 col-sm12 col-md-12 col-lg-12">
+            <div th:insert="~{com :: notice}"></div>
         </div>
+
     </div>
 </div>
 <div th:replace="com::foot"></div>

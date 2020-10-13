@@ -1,17 +1,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.community.mapper.MyMapper">
-
-    <select id="findMyQuestions" resultMap="myOne" parameterType="String">
-        select *from t_question q,t_user u
-        where q.usercode = u.usercode and q.usercode = #{userCode}
-        <if test="title != null and title !=''">
-            and title like concat('%', #{title}, '%')
-        </if>
-        order by questioncode desc
-    </select>
-    <resultMap id="myOne" type="Question">
+<mapper namespace="com.community.mapper.AdminMapper">
+    <resultMap id="adminone" type="Question">
         <id column="questioncode" property="questionCode"></id>
         <result column="title" property="title"></result>
         <result column="context" property="context"></result>
@@ -30,7 +21,12 @@
             <result column="imageurl" property="imageUrl"></result>
         </association>
     </resultMap>
-    <delete id="deleteQuestion" parameterType="Question">
-        delete from t_question where questioncode = #{questionCode}
-    </delete>
+    <select id="findQuestionsByAdmin" resultMap="adminone">
+        select *from t_question q,t_user u
+        where q.usercode = u.usercode and status != 1
+        <if test="title != null and title !=''">
+            and title like concat('%', #{title}, '%')
+        </if>
+        order by questioncode desc
+    </select>
 </mapper>

@@ -21,6 +21,8 @@
                     <a th:href="@{/question(questionCode = ${question.questionCode})}"><h4 class="media-heading" th:text="${question.title}">话题标题</h4></a>
                     <br>
                     <span class="text-kind"><span th:text="${question.commentCount}"></span> 个回复  | <span th:text="${question.viewCount}"></span> 次浏览  | <span th:text="${#dates.format(question.createTime,'yyyy-MM-dd')}"></span> 天前</span>
+                    <span class="label label-danger" th:if="${question.status == 2}">话题审核中</span>
+                    <span class="label label-danger" th:if="${question.status == 3}">审核不通过</span>
                 </div>
             </div>
             <div>
@@ -45,5 +47,6 @@
         </div>
     </div>
 </div>
+<div th:replace="com::foot"></div>
 </body>
 </html>

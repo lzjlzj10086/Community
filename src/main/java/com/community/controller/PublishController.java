@@ -30,6 +30,6 @@ public class PublishController {
             attributes.addFlashAttribute("massage","发布话题失败");
             return "redirect:/topublish";
         }
-        return "redirect:/index";
+        return "redirect:/profile";
     }
 }

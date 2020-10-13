@@ -35,6 +35,7 @@ public class QuestionService {
         question.setViewCount(0);
         question.setCommentCount(0);
         question.setLikeCount(0);
+        question.setStatus(2);
         int saveQuestion = questionMapper.saveQuestion(question);
         return saveQuestion;
     }
@@ -78,6 +79,15 @@ public class QuestionService {
                 .collect(Collectors.joining("|"));
         List<Question> aboutQuestions = questionMapper.aboutQuestions(question.getQuestionCode(),regexpTag);
         return aboutQuestions;
+    }
+
+    /**
+     * 热门话题查询
+     * @return
+     */
+    public List<Question> hotQuestion(){
+        List<Question> hotQuestions = questionMapper.hotQuestions();
+        return hotQuestions;
     }
     @Transactional
     public Integer updateQuestion(Question question){

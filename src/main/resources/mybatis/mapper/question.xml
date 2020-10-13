@@ -13,7 +13,8 @@
             usercode,
             viewcount,
             likecount,
-            commentcount
+            commentcount,
+            status
         ) values (
             #{questionCode},
             #{title},
@@ -24,12 +25,13 @@
             #{userCode},
             #{viewCount},
             #{likeCount},
-            #{commentCount}
+            #{commentCount},
+            #{status}
         );
     </insert>
     <select id="findQuestions" resultMap="one" parameterType="String">
         select *from t_question q,t_user u
-        where q.usercode = u.usercode
+        where q.usercode = u.usercode and status = 1
         <if test="title != null and title !=''">
             and title like concat('%', #{title}, '%')
         </if>
@@ -46,6 +48,7 @@
         <result column="viewcount" property="viewCount"></result>
         <result column="likecount" property="likeCount"></result>
         <result column="commentcount" property="commentCount"></result>
+        <result column="status" property="status"></result>
         <association property="user" javaType="User">
             <id column="usercode" property="userCode"></id>
             <result column="password" property="passWord"></result>
@@ -144,5 +147,11 @@
             and tags regexp #{regexpTag}
         </if>
         order by createtime desc limit 20
+    </select>
+    <!--热门话题-->
+    <select id="hotQuestions" resultMap="one">
+        select *
+        from t_question
+        order by viewcount desc limit 10
     </select>
 </mapper>

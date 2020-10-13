@@ -44,7 +44,9 @@ public class LoginController {
             session.setAttribute("user",loginUser);
             Integer countNotifys = notifyService.countNotifys(loginUser.getUserCode());
             session.setAttribute("countNotifys",countNotifys);
-            //request.getServletContext().setAttribute("user",loginUser);
+            if ("root".equals(loginUser.getUserName())){
+                return "redirect:/adminIndex";
+            }
             return "redirect:/index";
         }else {
             attributes.addFlashAttribute("massage","用户名或密码错误");

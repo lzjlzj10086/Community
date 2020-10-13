@@ -41,14 +41,14 @@
     </resultMap>
     <select id="findNotifys" resultMap="notify" parameterType="String">
         select *from t_notify n,t_user u,t_question q
-        where receivercode = #{userCode}
+        where receivercode = #{userCode} and n.notifycode != #{userCode}
         and n.notifycode = u.usercode
         and n.questioncode = q.questioncode
         order by n.createtime desc
     </select>
     <select id="countNotify" resultType="Integer">
         select count(status) from t_notify
-        where receivercode = #{userCode}
+        where receivercode = #{userCode} and notifycode != #{userCode}
         and status = 1
     </select>
     <update id="updateStatus" parameterType="String">

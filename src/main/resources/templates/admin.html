@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="com::head(~{::title})">
+    <title>管理员</title>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">408社区管理</span>
+            </button>
+            <a class="navbar-brand" href="#">408社区管理</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li th:if="${session.user == null}"><a href="/tologin">登录</a></li>
+                <li class="dropdown" th:if="${session.user != null}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span th:text="${session.user.userName}"></span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/profile">审核未通过</a></li>
+                        <li><a href="/profile">待审核</a></li>
+                        <li><a href="/profile">审核已通过</a></li>
+                        <li><a href="/logintOut">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+</nav>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-xs-12 col-sm12 col-md-12 col-lg-9 msole">
+            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>话题审核</h2>
+            <hr>
+            <div class="media " th:each="questionAdmin:${pageAdminInfo.list}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object xs-image img-rounded" th:src="@{${questionAdmin.user.imageUrl}}" alt="用户">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <a th:href="@{/question(questionCode = ${questionAdmin.questionCode})}"><h4 class="media-heading" th:text="${questionAdmin.title}">话题标题</h4></a>
+                    <br>
+                    <span class="text-kind"><span th:text="${questionAdmin.commentCount}"></span> 个回复  | <span th:text="${questionAdmin.viewCount}"></span> 次浏览  | <span th:text="${#dates.format(questionAdmin.createTime,'yyyy-MM-dd')}"></span> 天前</span>
+                    <span class="label label-danger" th:if="${questionAdmin.status == 2}">话题审核中</span>
+                    <span class="label label-danger" th:if="${questionAdmin.status == 3}">审核不通过</span>
+                </div>
+            </div>
+            <div>
+                <nav aria-label="..." class="mfoot">
+                    <ul class="pagination pagination-lg">
+                        <li class="" th:unless="${pageAdminInfo.isFirstPage}"><a th:href="@{/adminIndex(pageNum = 1)}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                        <li class="" th:unless="${pageAdminInfo.isFirstPage}"><a th:href="@{/adminIndex(pageNum = ${pageAdminInfo.pageNum} - 1)}" >上一页 <span class="sr-only"></span></a></li>
+                        <li class="" th:unless="${pageAdminInfo.isLastPage}"><a th:href="@{/adminIndex(pageNum = ${pageAdminInfo.pageNum} + 1)}" > 下一页<span class="sr-only">(current)</span></a></li>
+                        <li class="" th:unless="${pageAdminInfo.isLastPage}"><a th:href="@{/adminIndex(pageNum = ${pageAdminInfo.pages})}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm12 col-md-12 col-lg-3" style="margin-top: 20px;">
+            <!--热门话题-->
+
+        </div>
+
+    </div>
+</div>
+<div th:replace="com::foot"></div>
+</body>
+</html>

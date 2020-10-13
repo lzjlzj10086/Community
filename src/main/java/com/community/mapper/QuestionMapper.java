@@ -27,4 +27,5 @@ public interface QuestionMapper {
      * @return
      */
     List<Question> aboutQuestions(String questionCode,String regexpTag);
+    List<Question> hotQuestions();
 }

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -22,6 +23,8 @@ public class IndexController {
         PageInfo<Question> questions = questionService.findQuestion(pageNum, 12,title);
         model.addAttribute("questions",questions);
         map.put("pageInfo",questions);
+        List<Question> hotQuestion = questionService.hotQuestion();
+        model.addAttribute("hotQuestions",hotQuestion);
         return "index";
     }
 }
