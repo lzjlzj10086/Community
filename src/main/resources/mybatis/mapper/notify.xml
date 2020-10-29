@@ -11,7 +11,8 @@
             type,
             status,
             createtime,
-            questioncode
+            questioncode,
+            notifycontext
        )values (
             #{code},
             #{notifyCode},
@@ -20,7 +21,8 @@
             #{type},
             #{status},
             #{createTime},
-            #{questionCode}
+            #{questionCode},
+            #{notifyContext}
        )
    </insert>
     <resultMap id="notify" type="Notify">
@@ -33,6 +35,7 @@
         <result column="status" property="status"></result>
         <result column="questioncode" property="questionCode"></result>
         <result column="title" property="questionTitle"></result>
+        <result column="notifycontext" property="notifyContext"></result>
         <association property="user" javaType="User">
             <id column="usercode" property="userCode"></id>
             <result column="username" property="userName"></result>

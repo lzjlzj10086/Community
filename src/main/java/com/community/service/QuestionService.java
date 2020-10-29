@@ -111,6 +111,7 @@ public class QuestionService {
         notify.setStatus(1);
         notify.setCreateTime(System.currentTimeMillis());
         notify.setQuestionCode(comment.getQuestionCode());
+        notify.setNotifyContext(comment.getContext());
         notifyService.saveNotify(notify);
         return saveComment;
     }

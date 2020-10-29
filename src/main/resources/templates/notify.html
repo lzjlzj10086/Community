@@ -20,6 +20,7 @@
                             <span th:if="${notify.type == 2}">回复</span>&nbsp;&nbsp;
                             <a th:href="@{/question(questionCode = ${notify.questionCode})}" th:text="${notify.questionTitle}">
                             </a>&nbsp;&nbsp;
+                            <span style="font-family: 'Glyphicons Halflings';font-size: 17px;" th:text="${notify.notifyContext}"></span>
                             <span class="text-kind"><span th:text="${#dates.format(notify.createTime,'yyyy-MM-dd')}"></span> 天前</span>
                         </p>
                     </div>

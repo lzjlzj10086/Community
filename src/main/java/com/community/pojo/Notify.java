@@ -13,6 +13,16 @@ public class Notify {
     private String questionCode;
     private String questionTitle;
     private User user;
+    private String notifyContext;
+
+
+    public String getNotifyContext() {
+        return notifyContext;
+    }
+
+    public void setNotifyContext(String notifyContext) {
+        this.notifyContext = notifyContext;
+    }
 
     @Override
     public String toString() {
