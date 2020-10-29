@@ -17,8 +17,8 @@ spring:
     qianzui: books
   http:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
+      max-file-size: 100MB
+      max-request-size: 100MB
 mybatis:
   type-aliases-package: com.community.pojo
   mapper-locations: classpath:mybatis/mapper/*.xml
