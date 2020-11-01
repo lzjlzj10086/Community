@@ -19,12 +19,51 @@ public class MyController {
 
     @Autowired
     private MyService myService;
+
+    /**
+     * 查询我的所有
+     * @param pageNum
+     * @param model
+     * @param map
+     * @param title
+     * @param session
+     * @return
+     */
     @RequestMapping("/profile")
-    public String toProfile(@RequestParam(defaultValue = "1") Integer pageNum, Model model, Map<String,Object> map, String title, HttpSession session){
+    public String toProfile(@RequestParam(defaultValue = "1") Integer pageNum, Model model, Map<String,Object> map, String title, HttpSession session,Question question){
         User user = (User)session.getAttribute("user");
         String userCode = user.getUserCode();
+        question.setUserCode(userCode);
         PageInfo<Question> myQuestions = myService.findMyQuestion(pageNum,12,title,userCode);
         model.addAttribute("myQuestions",myQuestions);
+        model.addAttribute("myall",myService.countAll(question));
+        model.addAttribute("statusone",myService.countOne(question));
+        model.addAttribute("statustwo",myService.counTwo(question));
+        model.addAttribute("statusthere",myService.countThere(question));
+        map.put("mypageInfo",myQuestions);
+        return "profile";
+    }
+
+    /**
+     * 根据状态查询我的所有
+     * @param pageNum
+     * @param model
+     * @param map
+     * @param question
+     * @param session
+     * @return
+     */
+    @RequestMapping("/profileByStatus")
+    public String toProfileByStatus(@RequestParam(defaultValue = "1") Integer pageNum, Model model, Map<String,Object> map, Question question, HttpSession session){
+        User user = (User)session.getAttribute("user");
+        String userCode = user.getUserCode();
+        question.setUserCode(userCode);
+        PageInfo<Question> myQuestions = myService.findMyQuestionByStatus(pageNum,12,question);
+        model.addAttribute("myQuestions",question);
+        model.addAttribute("myall",myService.countAll(question));
+        model.addAttribute("statusone",myService.countOne(question));
+        model.addAttribute("statustwo",myService.counTwo(question));
+        model.addAttribute("statusthere",myService.countThere(question));
         map.put("mypageInfo",myQuestions);
         return "profile";
     }

@@ -28,21 +28,20 @@
             <div>
                 <nav aria-label="..." class="mfoot">
                     <ul class="pagination pagination-lg">
-                        <li class="" th:unless="${mypageInfo.isFirstPage}"><a th:href="@{/index(pageNum = 1)}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-                        <li class="" th:unless="${mypageInfo.isFirstPage}"><a th:href="@{/index(pageNum = ${mypageInfo.pageNum} - 1)}" >上一页 <span class="sr-only"></span></a></li>
-                        <li class="" th:unless="${mypageInfo.isLastPage}"><a th:href="@{/index(pageNum = ${mypageInfo.pageNum} + 1)}" > 下一页<span class="sr-only">(current)</span></a></li>
-                        <li class="" th:unless="${mypageInfo.isLastPage}"><a th:href="@{/index(pageNum = ${mypageInfo.pages})}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+                        <li class="" th:unless="${mypageInfo.isFirstPage}"><a th:href="@{/profile(pageNum = 1)}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                        <li class="" th:unless="${mypageInfo.isFirstPage}"><a th:href="@{/profile(pageNum = ${mypageInfo.pageNum} - 1)}" >上一页 <span class="sr-only"></span></a></li>
+                        <li class="" th:unless="${mypageInfo.isLastPage}"><a th:href="@{/profile(pageNum = ${mypageInfo.pageNum} + 1)}" > 下一页<span class="sr-only">(current)</span></a></li>
+                        <li class="" th:unless="${mypageInfo.isLastPage}"><a th:href="@{/profile(pageNum = ${mypageInfo.pages})}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
                     </ul>
                 </nav>
             </div>
         </div>
         <div class="col-xs-12 col-sm12 col-md-12 col-lg-3">
             <div class="list-group my-menu" >
-                <a href="#" class="list-group-item active">我的话题<span class="badge">14</span></a>
-                <a href="#" class="list-group-item">最新回复<span class="badge">14</span></a>
-                <a href="#" class="list-group-item">Morbi leo risus<span class="badge">14</span></a>
-                <a href="#" class="list-group-item">Porta ac consectetur ac<span class="badge">14</span></a>
-                <a href="#" class="list-group-item">Vestibulum at eros<span class="badge">14</span></a>
+                <a href="/profile" class="list-group-item active">我的话题<span class="badge" th:text="${myall}">14</span></a>
+                <a th:href="@{/profileByStatus(status = 1)}" class="list-group-item">已审核通过<span th:text="${statusone}" class="badge">14</span></a>
+                <a th:href="@{/profileByStatus(status = 3)}" class="list-group-item">审核未通过<span th:text="${statusthere}" class="badge">14</span></a>
+                <a th:href="@{/profileByStatus(status = 2)}" class="list-group-item">待审核<span th:text="${statustwo}" class="badge">14</span></a>
             </div>
         </div>
     </div>

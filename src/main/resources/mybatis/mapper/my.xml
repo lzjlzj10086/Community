@@ -11,6 +11,12 @@
         </if>
         order by questioncode desc
     </select>
+    <select id="findMyQuestionsByStatus" resultMap="myOne" parameterType="Question">
+        select *from t_question q,t_user u
+        where q.usercode = u.usercode and q.usercode = #{userCode}
+        and status = #{status}
+        order by questioncode desc
+    </select>
     <resultMap id="myOne" type="Question">
         <id column="questioncode" property="questionCode"></id>
         <result column="title" property="title"></result>
@@ -33,4 +39,17 @@
     <delete id="deleteQuestion" parameterType="Question">
         delete from t_question where questioncode = #{questionCode}
     </delete>
+    <select id="countByAll" resultType="Integer">
+        select count(questioncode) from t_question where usercode = #{userCode}
+    </select>
+    <select id="countByOne" resultType="Integer">
+        select count(questioncode) from t_question where usercode = #{userCode} and status = 1
+    </select>
+    <select id="countByTwo" resultType="Integer">
+        select count(questioncode) from t_question where usercode = #{userCode} and status = 2
+    </select>
+    <select id="countByThere" resultType="Integer">
+        select count(questioncode) from t_question where usercode = #{userCode} and status = 3
+    </select>
+
 </mapper>

@@ -24,4 +24,19 @@ public class LoignService {
         User loginUser = userMapper.loginUser(user);
         return loginUser;
     }
+    public User findUpdateUser(User user){
+        User findUpdateUser = userMapper.findUpdateUser(user);
+        return findUpdateUser;
+    }
+    public Integer updateUser(User user){
+        User updateUser1 = userMapper.findUpdateUser(user);
+        if (!updateUser1.getUserName().equals(user.getUserName())){
+            int count = userMapper.countUser(user);
+            if (count != 0){
+                return 0;
+            }
+        }
+        Integer updateUser = userMapper.updateUser(user);
+        return updateUser;
+    }
 }
