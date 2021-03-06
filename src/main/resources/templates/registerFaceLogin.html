@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="facehead::head(~{::title})">
+    <title>人脸注册</title>
+</head>
+
+<body class="no-skin">
+
+<div class="main-container ace-save-state" id="main-container">
+
+    <div class="main-content">
+        <div class="main-content-inner">
+
+            <div class="page-content">
+
+                <div style="padding: 10px;">
+                	<table>
+	                    <tr>
+	                        <td colspan="2">
+	                            <button class="btn btn-sm btn-default" onclick="openMedia()">开启摄像头</button>
+	                            <button class="btn btn-sm btn-default" onclick="closeMedia()">关闭摄像头</button>
+	                            <button class="btn btn-sm btn-default" onclick="takePhoto('register')">注册</button>
+                                <a href="/index"> <button class="btn btn-sm btn-default" >返回首页</button></a>
+	                        </td>
+	                    </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td>
+                                <video id="video" width="500px" height="500px" autoplay="autoplay"></video>
+                                <canvas id="canvas" width="500px" height="500px" style="display: none"></canvas>
+                            </td>
+                            <td>
+                                <img id="imgTag" src="" alt="..." width="500px" height="500px"><br>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <script>
+                        let mediaStreamTrack=null; // 视频对象(全局)
+                        let video ;
+                        function openMedia() {
+                            let constraints = {
+                                video: { width: 500, height: 500 },
+                                audio: false
+                            };
+                            //获得video摄像头
+                            video = document.getElementById('video');
+                            let promise = navigator.mediaDevices.getUserMedia(constraints);
+                            promise.then((mediaStream) => {
+                                // mediaStreamTrack = typeof mediaStream.stop === 'function' ? mediaStream : mediaStream.getTracks()[1];
+                                mediaStreamTrack=mediaStream.getVideoTracks()
+                                video.srcObject = mediaStream;
+                                video.play();
+                            });
+                        }
+
+                        // 拍照
+                        function takePhoto(str) {
+                            //获得Canvas对象
+                            let video = document.getElementById('video');
+                            let canvas = document.getElementById('canvas');
+                            let ctx = canvas.getContext('2d');
+                            ctx.drawImage(video, 0, 0, 500, 500);
+
+
+                            // toDataURL  ---  可传入'image/png'---默认, 'image/jpeg'
+                            let img = document.getElementById('canvas').toDataURL();
+                            // 这里的img就是得到的图片
+                            console.log('img-----', img);
+                            document.getElementById('imgTag').src=img;
+                            //alert(img);
+                           // alert(str);
+                            //上传
+                            var flagStr="登录";
+                            if(str=="register"){
+                            	flagStr="注册";
+                            }
+                            console.log("nidjsajk");
+                            $.ajax({
+                                url:"faceController",
+                                type:"POST",
+                                data:{"imgData":img,"type":str},
+                                dataType: "json",
+                                success:function(data){
+                                    var flag = data.success;
+                                    if (flag) {
+                                        alert(flagStr+"成功");
+                                    } else {
+                                        if (flagStr=="注册"){
+                                            alert(flagStr+"失败!该用户已经注册人脸登录");
+                                        }else {
+                                            alert(flagStr+"失败!");
+                                        }
+
+                                    }
+                                }
+                                ,error:function(){
+                                    alert("服务器内部错误！"+flagStr+"失败")
+                                }
+                            });
+
+                        }
+
+                        // 关闭摄像头
+                        function closeMedia() {
+                            let stream = document.getElementById('video').srcObject;
+                            let tracks = stream.getTracks();
+
+                            tracks.forEach(function(track) {
+                                track.stop();
+                            });
+
+                            document.getElementById('video').srcObject = null;
+                        }
+                    </script>
+                </div>
+
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+</div><!-- /.main-container -->
+
+</body>
+</html>

@@ -5,6 +5,15 @@ public class User {
     private String userName;
     private String passWord;
     private String imageUrl;
+    private String faceUrl;
+
+    public String getFaceUrl() {
+        return faceUrl;
+    }
+
+    public void setFaceUrl(String faceUrl) {
+        this.faceUrl = faceUrl;
+    }
 
     public String getUserCode() {
         return userCode;

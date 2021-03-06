@@ -6,7 +6,6 @@ import com.community.service.NotifyService;
 import com.community.util.CodeUtil;
 import com.community.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -15,8 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpSession;
-import java.io.File;
 
 @Controller
 public class LoginController {
@@ -114,5 +113,13 @@ public class LoginController {
         User findUpdateUser = loignService.findUpdateUser(user);
         model.addAttribute("updateUser",findUpdateUser);
         return "updateUser";
+    }
+    @RequestMapping("toRegisterFaceLogin")
+    public String registerFaceLogin(){
+        return "registerFaceLogin";
+    }
+    @RequestMapping("FaceLogin")
+    public String faceLogin(){
+        return "FaceLogin";
     }
 }

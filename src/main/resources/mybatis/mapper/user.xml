@@ -24,11 +24,13 @@
     <select id="findUpdateUser" parameterType="User" resultType="User">
         select *from t_user where usercode = #{userCode}
     </select>
-    <update id="updateUser" parameterType="User">
+
+    <update id="updateUserAddfaceUrl" parameterType="User">
         update t_user set
-        username = #{userName},
-        password = #{passWord},
-        imageurl = #{imageUrl}
-        where usercode = #{userCode};
+        faceurl = #{faceUrl}
+        where username = #{userName};
     </update>
+    <select id="findAllUser" resultType="User">
+        select * from t_user
+    </select>
 </mapper>

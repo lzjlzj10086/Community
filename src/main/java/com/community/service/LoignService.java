@@ -39,4 +39,11 @@ public class LoignService {
         Integer updateUser = userMapper.updateUser(user);
         return updateUser;
     }
+    public Integer registerFaceLogin(String username,String faceUrl){
+        User user = new User();
+        user.setUserName(username);
+        user.setFaceUrl(faceUrl);
+        int userAddfaceUrl = userMapper.updateUserAddfaceUrl(user);
+        return userAddfaceUrl;
+    }
 }
