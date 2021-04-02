@@ -33,7 +33,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <ul class="nav navbar-nav">
                     <li th:classappend="${n==1} ? 'active'"><a href="/index">首页<span class="sr-only">(current)</span></a></li>
-                    <li><a href="/javaExecute">代码在线编译</a></li>
+                    <!--<li><a href="/javaExecute">代码在线编译</a></li>-->
+                    <li th:if="${session.user != null}"><a href="/home">在线练习</a></li>
                     <li th:classappend="${n==2} ? 'active'"><a href="/topublish">发布话题</a></li>
                     <li th:if="${session.user != null}" th:classappend="${n==3} ? 'active'"><a href="/toFindNotify">通知<span class="badge message" th:text="${session.countNotifys}"></span></a></li>
                 </ul>

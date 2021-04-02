@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="com::head(~{::title})">
+    <title>管理员</title>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">408社区管理</span>
+            </button>
+            <a class="navbar-brand" href="#">408社区管理</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/adminOfAllUser">用户管理</a></li>
+                <li th:if="${session.user == null}"><a href="/tologin">登录</a></li>
+                <li class="dropdown" th:if="${session.user != null}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span th:text="${session.user.userName}"></span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/adminNotPassQuestion">审核未通过</a></li>
+                        <li><a href="/adminPassQuestion">审核已通过</a></li>
+                        <li><a href="/adminIndex">待审核</a></li>
+                        <li><a href="/logintOut">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+</nav>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-xs-12 col-sm12 col-md-12 col-lg-9 msole">
+            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>管理用户</h2>
+            <hr>
+            <div class="media" >
+                <table class="table table-striped" >
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">用户名</th>
+                        <th scope="col">密码</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user:${adminOfAllUser}">
+                        <th scope="row" th:text="${user.userCode}"></th>
+                        <td th:text="${user.userName}"></td>
+                        <td th:text="${user.passWord}"></td>
+                        <td>
+                             <a th:href="@{/adminOfDeleteUser(userCode = ${user.userCode})}"><button type="button" class="b_admin btn btn-danger pull-right">删除该用户</button></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm12 col-md-12 col-lg-3" style="margin-top: 20px;">
+            <!--热门话题-->
+
+        </div>
+
+    </div>
+</div>
+<div th:replace="com::foot"></div>
+</body>
+</html>
