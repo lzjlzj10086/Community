@@ -53,14 +53,19 @@ public class FaceLoginController {
         try {
             //2、判断是否包含人脸信息： detect
             String faceToken= FaceUtil.detect(file);
+            //判定用户请求的类型
+
             if(faceToken!=null){// 2.1 包含：
                 // 在faceset中查找是否有相似度高的人脸信息： search
+                String type=request.getParameter("type");
                 res= FaceUtil.search(faceToken);//    有：登录成功；删除照片 没有：登录失败；删除照片
+
+                if("login".equals(type)) {//如果是登录
                 if (res){
                     List<User> allUser = userMapper.findAllUser();
                     RestTemplate restTemplate = new RestTemplate();
                     for (User user : allUser){
-                        if (user.getFaceUrl() == null || user.getFaceUrl() == ""){
+                        if (user.getFaceUrl() == null || user.getFaceUrl() == "" || user.getFaceUrl().length()<=1){
                             continue;
                         }
                         String url = "https://api-cn.faceplusplus.com/facepp/v3/compare";
@@ -89,15 +94,14 @@ public class FaceLoginController {
                     }
                     res = temofalg;
 
-                }
-                //判定用户请求的类型
-                String type=request.getParameter("type");
+                }}
+
                 if("register".equals(type)) {//如果是注册
                     if(res) {//有：已经注册过;删除照片
                         res=false;
                     }else {//没有：可以注册，添加facetoken到faceset中；保留照片
                         User user = (User) session.getAttribute("user");
-                        if (user.getFaceUrl() == null || user.getFaceUrl() == ""){
+                        if (user.getFaceUrl() == null || user.getFaceUrl() == "" || user.getFaceUrl().length()<1){
                             FileInputStream input = new FileInputStream(file);
                             // 图片文件
                             MultipartFile multipartFile = new MockMultipartFile(file.getName(),file.getName(),"image/jpeg", input );
